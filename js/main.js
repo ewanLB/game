@@ -112,17 +112,6 @@ function update() {
         }
     }
 
-
-const player = new Player();
-const bullets = [];
-const keys = {};
-
-function update() {
-    player.update();
-    bullets.forEach((b, i) => {
-        b.update();
-        if (b.y + b.height < 0) bullets.splice(i, 1);
-    });
 }
 
 function draw() {
