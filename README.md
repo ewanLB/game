@@ -1,5 +1,10 @@
 # Game
 
-A simple web-based shooting game built with JavaScript and HTML5 canvas. Open `index.html` in a browser to play.
+This repository contains a small web‑based shooting game built with
+JavaScript and HTML5 canvas.
 
-Use the left and right arrow keys to move and the space bar to shoot. Destroy falling targets to gain points.
+Open `index.html` in a browser to play.
+
+Use the left and right arrow keys to move the player and press the space bar to
+shoot at falling targets. Destroying enemies awards points which are displayed
+on the canvas.

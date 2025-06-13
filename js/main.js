@@ -44,7 +44,6 @@ class Bullet {
     }
 }
 
-
 class Enemy {
     constructor(x, y) {
         this.width = 20;
