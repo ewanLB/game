@@ -1,5 +1,8 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const startBtn = document.getElementById('startBtn');
+const endBtn = document.getElementById('endBtn');
+const timerDisplay = document.getElementById('timerDisplay');
 
 class Player {
     constructor() {
@@ -70,6 +73,10 @@ const keys = {};
 let score = 0;
 let spawnTimer = 0;
 const spawnInterval = 60; // frames
+let running = false;
+let animationId;
+let timerInterval;
+let timeLeft = 60;
 
 function update() {
     player.update();
@@ -124,15 +131,45 @@ function draw() {
     ctx.fillText('Score: ' + score, 10, 20);
 }
 
+function updateTimerDisplay() {
+    timerDisplay.textContent = 'Time: ' + timeLeft;
+}
+
 function gameLoop() {
+    if (!running) return;
     update();
     draw();
-    requestAnimationFrame(gameLoop);
+    animationId = requestAnimationFrame(gameLoop);
+}
+
+function startGame() {
+    if (running) return;
+    running = true;
+    score = 0;
+    spawnTimer = 0;
+    bullets.length = 0;
+    enemies.length = 0;
+    timeLeft = 60;
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+            endGame();
+        }
+    }, 1000);
+    animationId = requestAnimationFrame(gameLoop);
+}
+
+function endGame() {
+    running = false;
+    clearInterval(timerInterval);
+    cancelAnimationFrame(animationId);
 }
 
 window.addEventListener('keydown', e => {
     keys[e.key] = true;
-    if (e.key === ' ') {
+    if (e.key === ' ' && running) {
         const bulletX = player.x + player.width / 2 - 2;
         bullets.push(new Bullet(bulletX, player.y));
     }
@@ -142,4 +179,5 @@ window.addEventListener('keyup', e => {
     keys[e.key] = false;
 });
 
-requestAnimationFrame(gameLoop);
+startBtn.addEventListener('click', startGame);
+endBtn.addEventListener('click', endGame);
