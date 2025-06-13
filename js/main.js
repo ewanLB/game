@@ -112,6 +112,7 @@ function update() {
         }
     }
 
+
 const player = new Player();
 const bullets = [];
 const keys = {};
@@ -143,7 +144,8 @@ function gameLoop() {
 window.addEventListener('keydown', e => {
     keys[e.key] = true;
     if (e.key === ' ') {
-        bullets.push(new Bullet(player.x + player.width / 2 - 2, player.y));
+        const bulletX = player.x + player.width / 2 - 2;
+        bullets.push(new Bullet(bulletX, player.y));
     }
 });
 
